@@ -12,7 +12,8 @@ let envSchema = z.object({
     MISTRALAI_API_KEY:z.string(),
     GOOGLE_CLIENT_ID:z.string(),
     GOOGLE_CLIENT_SECRET:z.string(),
-    GOOGLE_CALLBACK_URI:z.string().url()
+    GOOGLE_CALLBACK_URI:z.string().url(),
+    NODE_ENV:z.enum(["development", "production"]).default("development")
 })
 
 

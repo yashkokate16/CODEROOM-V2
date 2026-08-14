@@ -21,6 +21,12 @@ app.use(
     })
 )
 
+app.get("/", (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "CodeRoom server is running 🚀"
+    });
+});
 
 
 app.use("/api/auth", authRouter);

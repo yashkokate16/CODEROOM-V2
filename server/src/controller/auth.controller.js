@@ -1,7 +1,7 @@
 import * as authService from "../services/auth.service.js";
 import * as userDao from "../dao/user.dao.js";
 import * as authUtils from "../utils/auth.utils.js";
-
+import env from "../config/env.js";
 
 export let registerController = async (req, res) => {
 
@@ -21,15 +21,15 @@ export let registerController = async (req, res) => {
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: env.NODE_ENV === "production",
+            sameSite: env.NODE_ENV === "production" ? "none" : "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
         res.cookie("accessToken", accessToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: env.NODE_ENV === "production",
+            sameSite: env.NODE_ENV === "production" ? "none" : "lax",
             maxAge: 15 * 60 * 1000
         });
 
@@ -81,15 +81,15 @@ export let loginController = async (req, res) => {
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: env.NODE_ENV === "production",
+            sameSite: env.NODE_ENV === "production" ? "none" : "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
         res.cookie("accessToken", accessToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: env.NODE_ENV === "production",
+            sameSite: env.NODE_ENV === "production" ? "none" : "lax",
             maxAge: 15 * 60 * 1000
         });
 
@@ -127,31 +127,40 @@ export let loginController = async (req, res) => {
     }
 };
 
+export let getUserController = async (req, res) => {
+    try {
 
-export let getUserController = async (req, res) =>{
-    try{
         let user = await userDao.getUserById(req.userId);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
 
         return res.status(200).json({
             success: true,
             message: "User fetched successfully",
-            data:{
-                user:{
+            data: {
+                user: {
                     name: user.name,
                     id: user._id,
                     email: user.email
-                }} 
-        })
-    } catch(error) {
-        if(error.message === "User not found") {
-            res.status(404).json({
-                success: false,
-                message: error.message
-            })
-        }
-}
+                }
+            }
+        });
 
-}
+    } catch (error) {
+
+        console.error("Get User Error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch user"
+        });
+    }
+};
 
 export let logoutController = async (req, res) => {
     try{
@@ -161,14 +170,14 @@ export let logoutController = async (req, res) => {
         
         res.clearCookie("accessToken", {
             httpOnly: true,
-            secure: true,
-            sameSite: "strict",
+            secure: env.NODE_ENV === "production",
+            sameSite: env.NODE_ENV === "production" ? "none" : "lax",
         });
 
         res.clearCookie("refreshToken", {
             httpOnly: true,
-            secure: true,
-            sameSite: "strict",
+            secure: env.NODE_ENV === "production",
+            sameSite: env.NODE_ENV === "production" ? "none" : "lax",
         });
 
         return res.status(200).json({
@@ -215,8 +224,8 @@ export let refreshTokenController = async (req, res) =>{
 
         res.cookie("accessToken", newAccessToken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: env.NODE_ENV === "production",
+            sameSite: env.NODE_ENV === "production" ? "none" : "lax",
             maxAge: 15 * 60 * 1000
         });
 

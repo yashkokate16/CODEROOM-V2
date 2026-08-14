@@ -10,11 +10,12 @@ const server = createServer(app);
 const startServer = async () => {
     try {
 
-        initializeSocketServer(server);
         await connectDB();
+        
+        initializeSocketServer(server);
 
 
-        server.listen(env.PORT, () => {
+        server.listen(env.PORT,"0.0.0.0", () => {
             console.log(`Server is running on port ${env.PORT}`);
         });
 
