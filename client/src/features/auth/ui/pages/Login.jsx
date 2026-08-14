@@ -236,6 +236,72 @@ const Login = () => {
 
           </form>
 
+          {/* Google Login */}
+
+          {/* Google Login */}
+<div className="mt-6">
+
+  {/* Divider */}
+  <div className="flex items-center gap-3 mb-5">
+    <div className="flex-1 h-px bg-white/20" />
+    <span className="text-gray-400 text-sm">OR</span>
+    <div className="flex-1 h-px bg-white/20" />
+  </div>
+
+  {/* Google Button */}
+  <button
+    type="button"
+    onClick={() => {
+      window.location.href = `${import.meta.env.VITE_SERVER_URL}/api/auth/google`;
+    }}
+    className="
+      w-full
+      py-3
+      rounded-full
+      bg-white
+      text-gray-800
+      font-semibold
+      flex
+      items-center
+      justify-center
+      gap-3
+      hover:bg-gray-100
+      hover:scale-[1.02]
+      active:scale-[0.98]
+      transition-all
+    "
+  >
+    {/* Google Icon */}
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M21.805 10.023H12v3.954h5.637c-.243 1.272-.973 2.35-2.073 3.073v2.55h3.36c1.967-1.812 3.103-4.48 3.103-7.577 0-.72-.064-1.413-.222-2z"
+        fill="#4285F4"
+      />
+      <path
+        d="M12 22c2.805 0 5.16-.93 6.88-2.52l-3.36-2.55c-.93.624-2.117.994-3.52.994-2.71 0-5.01-1.83-5.832-4.292H2.695v2.633A10.39 10.39 0 0 0 12 22z"
+        fill="#34A853"
+      />
+      <path
+        d="M6.168 13.632A6.24 6.24 0 0 1 5.84 12c0-.567.098-1.117.328-1.632V7.735H2.695A10.002 10.002 0 0 0 1.667 12c0 1.617.388 3.15 1.028 4.265l3.473-2.633z"
+        fill="#FBBC05"
+      />
+      <path
+        d="M12 6.077c1.528 0 2.9.525 3.978 1.553l2.982-2.982C17.155 2.997 14.805 2 12 2a10.39 10.39 0 0 0-9.305 5.735l3.473 2.633C6.99 7.907 9.29 6.077 12 6.077z"
+        fill="#EA4335"
+      />
+    </svg>
+
+    Continue with Google
+  </button>
+
+</div>
+
           {/* Register */}
           <p className="text-center text-gray-300 text-sm mt-7">
 
