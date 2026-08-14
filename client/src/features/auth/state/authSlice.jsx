@@ -45,6 +45,6 @@ let authSlice = createSlice({
 })
 
 
-export let {addUser, removeUser} = authSlice.actions;
+export let {setUser, removeUser} = authSlice.actions;
 
 export default authSlice.reducer;

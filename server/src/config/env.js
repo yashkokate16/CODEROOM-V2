@@ -9,7 +9,10 @@ let envSchema = z.object({
     ACCESS_TOKEN_SECRET:z.string(),
     REFRESH_TOKEN_SECRET:z.string(),
     CLIENT_URL:z.string().url(),
-    MISTRALAI_API_KEY:z.string()
+    MISTRALAI_API_KEY:z.string(),
+    GOOGLE_CLIENT_ID:z.string(),
+    GOOGLE_CLIENT_SECRET:z.string(),
+    GOOGLE_CALLBACK_URI:z.string().url()
 })
 
 

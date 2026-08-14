@@ -1,6 +1,6 @@
 import * as authService from "../services/auth.service.js";
 import * as userDao from "../dao/user.dao.js";
-
+import * as authUtils from "../utils/auth.utils.js";
 
 
 export let registerController = async (req, res) => {
@@ -189,3 +189,48 @@ export let logoutController = async (req, res) => {
 
 
 
+export let refreshTokenController = async (req, res) =>{
+    console.log("Refresh Token Controller called");
+    try{
+        let refreshToken = req.cookies.refreshToken;
+        // console.log("Refresh Token:", refreshToken);
+
+        if(!refreshToken) {
+            return res.status(401).json({
+                success: false,
+                message: "Refresh token is missing"
+            })
+        }
+        let decode = authUtils.verifyRefreshToken(refreshToken);
+        // console.log("Decoded Refresh Token:", decode);
+
+        if(!decode) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid refresh token"
+            })
+        }
+        let newAccessToken = authUtils.generateAccessToken(decode.userId);
+        // console.log("New Access Token:", newAccessToken);
+
+        res.cookie("accessToken", newAccessToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            maxAge: 15 * 60 * 1000
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: "Access token refreshed successfully",
+        })
+
+    } catch(error) {
+        console.error("Refresh Token Error:", error);
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+}

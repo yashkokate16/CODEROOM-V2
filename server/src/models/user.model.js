@@ -17,10 +17,19 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-
+    googleId:{
+      type:String,
+      sparse:true,
+    },
+    authProvider:{
+      type:String,
+      enum:["local", "google"],
+      default:"local",
+    },
     password: {
       type: String,
-      required: true,
+       unique: true,
+       sparse: true,
     },
   },
   {
@@ -29,13 +38,24 @@ const userSchema = new mongoose.Schema(
 );
 
 
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
+
+  if(!this.isModified("password")){
+    return ;
+  }
+
+  if(!this.password) {
+    return ;
+  }
 
     let hashPassword = await bcrypt.hash(this.password, 10);
     this.password = hashPassword;
 })
 
 userSchema.methods.comparePassword = async function (passoword) {
+  if(!this.password) {
+    return false;
+  }
     return await bcrypt.compare(passoword, this.password);
 }
 

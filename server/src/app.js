@@ -5,12 +5,13 @@ import roomRouter from "./routes/room.routes.js";
 import aiRouter from "./routes/ai.routes.js";
 import cors from "cors";
 import env from "./config/env.js";
-
+import passport from "./config/passport.js";
 
 let app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+app.use(passport.initialize());
 
 
 app.use(
@@ -19,6 +20,7 @@ app.use(
         credentials: true
     })
 )
+
 
 
 app.use("/api/auth", authRouter);

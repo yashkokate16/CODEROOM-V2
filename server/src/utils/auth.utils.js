@@ -4,7 +4,7 @@ import env from "../config/env.js";
 
 export let generateAccessToken = (userId) => {
 
-    let accessToken = jwt.sign({userId}, env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"});
+    let accessToken = jwt.sign({userId}, env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"});
     return accessToken;
 
 }

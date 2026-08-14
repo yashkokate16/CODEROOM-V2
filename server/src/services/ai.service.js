@@ -3,7 +3,8 @@ import { ChatMistralAI} from "@langchain/mistralai"
 
 let model = new ChatMistralAI({
     apiKey: process.env.MISTRALAI_API_KEY,
-    model: "mistral-medium-latest"
+    model: "mistral-medium-latest",
+    temperature: 0.2,
 });
 
 
