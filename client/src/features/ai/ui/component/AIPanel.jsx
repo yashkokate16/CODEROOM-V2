@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { generateCode } from "../../api/aiApi";
 
-const AiPanel = () => {
+const AIPanel = () => {
 
     const [prompt, setPrompt] = useState("");
     const [generatedCode, setGeneratedCode] = useState("");
@@ -109,4 +109,4 @@ const AiPanel = () => {
     );
 };
 
-export default AiPanel;
+export default AIPanel;
