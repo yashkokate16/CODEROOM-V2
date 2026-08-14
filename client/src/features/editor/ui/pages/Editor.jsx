@@ -9,7 +9,7 @@ import EditorWorkspace from "../components/EditorWorkspace";
 import socket from "../../../../app/socket/socket";
 import { setRoom } from "../../../auth/state/room.Slice";
 
-import AIPanel from "../../../ai/ui/component/AiPanel";
+import AiPanel from "../../../ai/ui/component/AiPanel";
 
 const Editor = () => {
 
