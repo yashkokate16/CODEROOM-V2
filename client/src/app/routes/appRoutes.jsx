@@ -17,7 +17,7 @@ import EditorRoute from '../protectedRoutes/EditorRoute'
 
 
 
-const appRoutes = () => {
+const AppRoutes = () => {
 
     let dispatch = useDispatch()
 
@@ -82,4 +82,4 @@ const appRoutes = () => {
   return <RouterProvider router={router} />
 }
 
-export default appRoutes
+export default AppRoutes
