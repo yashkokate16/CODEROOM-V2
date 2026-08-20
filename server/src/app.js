@@ -6,6 +6,8 @@ import aiRouter from "./routes/ai.routes.js";
 import cors from "cors";
 import env from "./config/env.js";
 import passport from "./config/passport.js";
+import codeRouter from "./routes/code.routes.js";
+
 
 let app = express();
 app.use(express.json());
@@ -34,6 +36,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/room", roomRouter);
 
 app.use("/api/ai", aiRouter);
+
+app.use("/api/code", codeRouter)
 
 
 
