@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux'
 import ProtectedRoute from '../protectedRoutes/ProtectedRoute'
 import PublicRoute from '../protectedRoutes/PublicRoute'
 import EditorRoute from '../protectedRoutes/EditorRoute'
-
+import Profile from '../../features/auth/ui/pages/Profile'
 
 
 
@@ -64,6 +64,10 @@ const AppRoutes = () => {
                     path:"",
                     element:<Home />
                 },
+                {
+                    path:"profile",
+                    element:<Profile />,
+                }
             ]
                 }
             ]
