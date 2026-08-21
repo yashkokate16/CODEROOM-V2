@@ -1,49 +1,16 @@
 import { Code2 } from "lucide-react";
 import MonacoEditor from "./MonacoEditor";
-import OutputPanel from "./OutputPanel";
-import { useDispatch, useSelector } from "react-redux";
-import { executeCode } from "../../api/executeCode.api";
-import {
-    setLanguage,
-    setTheme,
-    setExecutionRunning,
-    setExecutionResult
-} from "../../state/editor.Slice.jsx"
 
 const EditorWorkspace = () => {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
-const {
-    code,
-    language,
-    theme,
-    execution
-} = useSelector((state) => state.editor);
-
-
-const handleRunCode = async () => {
-
-    try {
-
-        dispatch(setExecutionRunning(true));
-
-        const result = await executeCode(code, language);
-
-        dispatch(setExecutionResult(result));
-
-    } catch (error) {
-
-        dispatch(setExecutionResult({
-            output: "",
-            error:
-                error.response?.data?.message ||
-                "Failed to execute code",
-            executionTime: null
-        }));
-
-    }
-};
+// const {
+//     code,
+//     language,
+//     theme,
+//     execution
+// } = useSelector((state) => state.editor);
  
 
 
@@ -84,14 +51,6 @@ const handleRunCode = async () => {
                         <option>Light</option>
                     </select>
 
-                    <button
-    onClick={handleRunCode}
-    disabled={execution.isRunning}
-    className="rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-500 disabled:cursor-not-allowed disabled:opacity-50"
->
-    {execution.isRunning ? "Running..." : "▶ Run"}
-</button>
-
                 </div>
 
             </div>
@@ -104,7 +63,6 @@ const handleRunCode = async () => {
                 <MonacoEditor />
 
             </div>
-            <OutputPanel />
 
         </section>
     );

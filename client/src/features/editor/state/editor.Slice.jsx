@@ -15,12 +15,12 @@ greet("Yash");
     lastSaved: null,
 
 
-    execution: {
-        isRunning: false,
-        output: "",
-        error: null,
-        executionTime: null,
-    },
+    // execution: {
+    //     isRunning: false,
+    //     output: "",
+    //     error: null,
+    //     executionTime: null,
+    // },
 
 
 };
@@ -46,15 +46,15 @@ let editorSlice = createSlice({
         setLastSaved: (state, action) => {
             state.lastSaved = action.payload;
         },
-        setExecutionRunning: (state, action) => {
-           state.execution.isRunning = action.payload;
-        },
-        setExecutionResult: (state, action) => {
-          state.execution.isRunning = false;
-          state.execution.output = action.payload.output || "";
-          state.execution.error = action.payload.error || null;
-          state.execution.executionTime = action.payload.executionTime || null;
-        },
+        // setExecutionRunning: (state, action) => {
+        //    state.execution.isRunning = action.payload;
+        // },
+        // setExecutionResult: (state, action) => {
+        //   state.execution.isRunning = false;
+        //   state.execution.output = action.payload.output || "";
+        //   state.execution.error = action.payload.error || null;
+        //   state.execution.executionTime = action.payload.executionTime || null;
+        // },
 
 
 
@@ -63,7 +63,7 @@ let editorSlice = createSlice({
 
 
 export let {setCode, setLanguage, setTheme, setIsTyping, setLastSaved,
-    setExecutionRunning, setExecutionResult,
+    // setExecutionRunning, setExecutionResult,
 } = editorSlice.actions;
 
 export default editorSlice.reducer;
