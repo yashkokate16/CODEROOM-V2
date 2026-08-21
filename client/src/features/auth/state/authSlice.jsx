@@ -3,12 +3,13 @@ import {LoginUser, getUser} from "./authThunk.jsx";
 
 let authSlice = createSlice({           
     name:'auth',
-    initialState:{
-        user:null,
-        isLoading:false,
-        isInitialized: false,
 
+    initialState: {
+        user: null,
+        isLoading: true,
+        isInitialized: false,
     },
+    
     reducers:{
         setUser:(state, action) =>{
             state.user = action.payload
