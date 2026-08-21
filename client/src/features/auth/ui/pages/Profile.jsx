@@ -2,9 +2,8 @@ import { useSelector } from "react-redux";
 
 const Profile = () => {
 
-    const { user, isLoading } = useSelector(
-        (state) => state.auth
-    );
+     const { user } = useSelector((state) => state.auth);
+    let User = user.user
 
     if (isLoading) {
         return (
@@ -14,7 +13,7 @@ const Profile = () => {
         );
     }
 
-    if (!user) {
+    if (!User) {
         return (
             <div className="flex min-h-screen items-center justify-center bg-zinc-950 text-white">
                 User not found.
@@ -41,17 +40,17 @@ const Profile = () => {
                     <div className="flex items-center gap-5">
 
                         <div className="flex h-20 w-20 items-center justify-center rounded-full bg-indigo-600 text-3xl font-bold">
-                            {user.name?.charAt(0).toUpperCase()}
+                            {User.name?.charAt(0).toUpperCase()}
                         </div>
 
                         <div>
 
                             <h2 className="text-2xl font-semibold">
-                                {user.name}
+                                {User.name}
                             </h2>
 
                             <p className="mt-1 text-zinc-400">
-                                {user.email}
+                                {User.email}
                             </p>
 
                         </div>
@@ -73,7 +72,7 @@ const Profile = () => {
                                 </p>
 
                                 <p className="mt-1 text-zinc-200">
-                                    {user.name}
+                                    {User.name}
                                 </p>
                             </div>
 
@@ -83,7 +82,7 @@ const Profile = () => {
                                 </p>
 
                                 <p className="mt-1 text-zinc-200">
-                                    {user.email}
+                                    {User.email}
                                 </p>
                             </div>
 

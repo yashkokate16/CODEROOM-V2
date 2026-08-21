@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Code2, LayoutDashboard, UserCircle } from "lucide-react";
 import { useSelector } from "react-redux";
 
@@ -6,6 +6,8 @@ const Navbar = () => {
 
   const { user } = useSelector((state) => state.auth);
    let User = user.user
+
+   let navigate =  useNavigate()
 
 
   return (
@@ -43,7 +45,8 @@ const Navbar = () => {
           </Link> */}
 
               
-          <button className="flex text-white items-center gap-2 rounded-xl border border-zinc-700 px-4 py-2 transition hover:border-indigo-500 hover:bg-zinc-900">
+          <button onClick={() => navigate("/home/profile")}
+           className="flex text-white items-center gap-2 rounded-xl border border-zinc-700 px-4 py-2 transition hover:border-indigo-500 hover:bg-zinc-900">
 
             <UserCircle size={22} />
 
