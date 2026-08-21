@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 const Profile = () => {
 
-     const { user } = useSelector((state) => state.auth);
+     const { user, isLoading } = useSelector((state) => state.auth);
     let User = user.user
 
     if (isLoading) {
