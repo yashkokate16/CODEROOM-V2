@@ -65,7 +65,7 @@ const AppRoutes = () => {
                     element:<Home />
                 },
                 {
-                    path:"profile",
+                    path:"/home/profile",
                     element:<Profile />,
                 }
             ]
