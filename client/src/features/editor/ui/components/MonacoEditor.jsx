@@ -1,92 +1,163 @@
-import React from 'react'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { setCode } from "../../state/editor.Slice"
-import Editor from "@monaco-editor/react";
-import socket from "../../../../app/socket/socket"
-import { useParams } from 'react-router-dom';
-import {saveRoom} from "../../api/saveRoom.api"
+import { Code2 } from "lucide-react";
+import MonacoEditor from "./MonacoEditor";
+import { useDispatch, useSelector } from "react-redux";
+import { executeCode } from "../../api/executeCode.api";
+import {
+    setExecutionRunning,
+    setExecutionResult
+} from "../../state/editor.Slice.jsx";
+
+const EditorWorkspace = () => {
+
+    const dispatch = useDispatch();
+
+    const {
+        code,
+        language,
+        execution
+    } = useSelector((state) => state.editor);
 
 
-const MonacoEditor = () => {
+    const handleRunCode = async () => {
 
-    let dispatch = useDispatch();
-        let{code, language, theme} = useSelector((state) => state.editor);
-    let {roomCode} = useParams();
+        try {
 
-    useEffect(() => {
+            dispatch(setExecutionRunning(true));
 
-        let handleCodeUpdate = ({code}) => {
+            const result = await executeCode(code, language);
 
-        console.log("code recived from Server:");
+            dispatch(setExecutionResult(result));
 
-        dispatch(setCode(code))
-    }
+        } catch (error) {
 
-    socket.on("codeUpdated", handleCodeUpdate);
+            dispatch(setExecutionResult({
+                output: "",
+                error:
+                    error.response?.data?.message ||
+                    "Failed to execute code",
+                executionTime: null
+            }));
 
-    return () =>{
-        socket.off("codeUpdated", handleCodeUpdate);
-    }
-    },[dispatch])
-
-
-    useEffect(() => {
-       if(!code) return ;
-
-       let timer = setTimeout(async () => {
-         try{
-            await saveRoom(roomCode, code);
-            console.log("Code saved successfully"); 
-        } 
-        catch(error){
-            console.error("Error saving code:", error);
         }
-        
-       }, 2000);
-
-       return () => {
-        clearTimeout(timer)
-       }
-    },[code, roomCode])
-    
-  return (
-    <div className="h-full w-full">
-      <Editor
-        height="100%"
-        width="100%"
-        language={language}
-        value={code}
-        onChange={(value) => {
-            
-            let newCode = value || "";
-
-            // update local redux state with new code //
-        dispatch(setCode(newCode));
+    };
 
 
-        //  send code to server // 
-        
-        socket.emit("codeChange",{
-            roomCode,
-            code: newCode
-        })
-        }}
+    return (
+        <section className="flex h-full min-h-0 flex-col overflow-hidden bg-zinc-950">
+
+            {/* Toolbar */}
+            <div className="flex h-14 shrink-0 items-center justify-between border-b border-zinc-800 px-6">
+
+                <div className="flex items-center gap-2">
+
+                    <Code2
+                        className="text-indigo-500"
+                        size={20}
+                    />
+
+                    <h2 className="text-lg font-semibold text-white">
+                        Code Editor
+                    </h2>
+
+                </div>
 
 
-        theme="vs-dark"
-        options={{
-          minimap: {
-            enabled: false,
-          },
-          fontSize: 15,
-          wordWrap: "on",
-          automaticLayout: true,
-          scrollBeyondLastLine: false,
-        }}
-      />
-    </div>
-  );
-}
+                <div className="flex gap-3">
 
-export default MonacoEditor
+                    {/* Language */}
+                    <select
+                        className="
+                            rounded-lg
+                            border
+                            border-zinc-700
+                            bg-zinc-900
+                            px-3
+                            py-2
+                            text-sm
+                            text-white
+                        "
+                    >
+                        <option value="javascript">
+                            JavaScript
+                        </option>
+
+                        <option value="typescript">
+                            TypeScript
+                        </option>
+
+                        <option value="python">
+                            Python
+                        </option>
+
+                        <option value="java">
+                            Java
+                        </option>
+
+                        <option value="cpp">
+                            C++
+                        </option>
+                    </select>
+
+
+                    {/* Theme */}
+                    <select
+                        className="
+                            rounded-lg
+                            border
+                            border-zinc-700
+                            bg-zinc-900
+                            px-3
+                            py-2
+                            text-sm
+                            text-white
+                        "
+                    >
+                        <option value="dark">
+                            Dark
+                        </option>
+
+                        <option value="light">
+                            Light
+                        </option>
+                    </select>
+
+
+                    {/* Run */}
+                    <button
+                        onClick={handleRunCode}
+                        disabled={execution.isRunning}
+                        className="
+                            rounded-lg
+                            bg-green-600
+                            px-4
+                            py-2
+                            text-sm
+                            font-semibold
+                            text-white
+                            hover:bg-green-500
+                            disabled:cursor-not-allowed
+                            disabled:opacity-50
+                        "
+                    >
+                        {execution.isRunning
+                            ? "Running..."
+                            : "▶ Run"}
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            {/* Monaco Editor */}
+            <div className="min-h-0 flex-1 overflow-hidden">
+
+                <MonacoEditor />
+
+            </div>
+
+        </section>
+    );
+};
+
+export default EditorWorkspace;

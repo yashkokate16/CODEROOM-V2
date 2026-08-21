@@ -3,7 +3,7 @@ import vm from "node:vm";
 export const executeJavaScript = async (code) => {
     const startTime = Date.now();
 
-    let output = [];
+    const output = [];
 
     try {
         const sandbox = {
@@ -19,11 +19,13 @@ export const executeJavaScript = async (code) => {
                             .join(" ")
                     );
                 },
+
                 error: (...args) => {
                     output.push(
                         args.map((arg) => String(arg)).join(" ")
                     );
                 },
+
                 warn: (...args) => {
                     output.push(
                         args.map((arg) => String(arg)).join(" ")

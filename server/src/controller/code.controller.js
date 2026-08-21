@@ -22,7 +22,7 @@ export const executeCodeController = async (req, res) => {
 
         const result = await executeJavaScript(code);
 
-        return res.status(200).json(result);x``
+        return res.status(200).json(result);
 
     } catch (error) {
 
