@@ -6,6 +6,8 @@ let authSlice = createSlice({
     initialState:{
         user:null,
         isLoading:false,
+        isInitialized: false,
+
     },
     reducers:{
         setUser:(state, action) =>{
@@ -32,11 +34,15 @@ let authSlice = createSlice({
             state.isLoading = true
         })
         .addCase(getUser.fulfilled, (state, action) => {
-            state.user = action.payload
-            state.isLoading = false
+            state.user = action.payload;
+            state.isLoading = false;
+            state.isInitialized = true;
+
         })
         .addCase(getUser.rejected, (state) => {
-            state.isLoading = false
+            state.isLoading = false;
+            state.user = null;
+            state.isInitialized = true;
         })
 
     },

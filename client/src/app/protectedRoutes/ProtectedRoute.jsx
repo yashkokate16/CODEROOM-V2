@@ -5,11 +5,16 @@ import {useSelector} from 'react-redux'
 
 const ProtectedRoute = () => {
 
-    let {user, isLoading} = useSelector((state) => state.auth)
+    let {user, isLoading, isInitialized} = useSelector((state) => state.auth)
 
-    if(isLoading){
-        return <h1 className='text-3xl font-bold'>
-        Loading...</h1>
+    if (!isInitialized || isLoading) {
+        return (
+            <div className="flex min-h-screen items-center justify-center bg-zinc-950 text-white">
+                <h1 className="text-2xl font-bold">
+                    Loading...
+                </h1>
+            </div>
+        );
     }
 
     if(!user) {
