@@ -13,7 +13,7 @@ const Navbar = () => {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         {/* Logo */}
         <Link
-          to="/dashboard"
+          to="/home"
           className="flex items-center gap-2"
         >
           <div className="rounded-xl bg-indigo-600 p-2">
@@ -34,13 +34,13 @@ const Navbar = () => {
         {/* Navigation */}
         <div className="flex items-center gap-6">
 
-          <Link
+          {/* <Link
             to="/dashboard"
             className="flex items-center gap-2 text-zinc-300 transition hover:text-white"
           >
             <LayoutDashboard size={18} />
             Dashboard
-          </Link>
+          </Link> */}
 
               
           <button className="flex text-white items-center gap-2 rounded-xl border border-zinc-700 px-4 py-2 transition hover:border-indigo-500 hover:bg-zinc-900">
